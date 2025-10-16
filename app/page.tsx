@@ -15,7 +15,6 @@ import jsPDF from 'jspdf'
 export default function PythonPresentation() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
-  const [isBlindGeneratingPDF, setIsBlindGeneratingPDF] = useState(false)
   const slideRef = useRef<HTMLDivElement>(null)
 
   const nextSlide = () => {
@@ -88,85 +87,6 @@ export default function PythonPresentation() {
     }
   }
 
-  const generatePDFBlind = async () => {
-    if (!slideRef.current) return
-    
-    setIsBlindGeneratingPDF(true)
-    
-    try {
-      const pdf = new jsPDF({
-        orientation: 'landscape',
-        unit: 'px',
-        format: [1200, 675]
-      })
-      
-      const originalSlide = currentSlide
-      
-      // Create a hidden container for all slides
-      const hiddenContainer = document.createElement('div')
-      hiddenContainer.style.position = 'absolute'
-      hiddenContainer.style.left = '-9999px'
-      hiddenContainer.style.top = '0'
-      hiddenContainer.style.width = slideRef.current.offsetWidth + 'px'
-      hiddenContainer.style.height = slideRef.current.offsetHeight + 'px'
-      hiddenContainer.style.overflow = 'hidden'
-      hiddenContainer.style.backgroundColor = '#ffffff' // Match original background
-      document.body.appendChild(hiddenContainer)
-      
-      // Clone all slides into the hidden container
-      const slideElements = []
-      for (let i = 0; i < slides.length; i++) {
-        setCurrentSlide(i)
-        await new Promise(resolve => requestAnimationFrame(resolve))
-        
-        const clone = slideRef.current.cloneNode(true) as HTMLElement
-        clone.style.position = 'absolute'
-        clone.style.top = '0'
-        clone.style.left = '0'
-        clone.style.width = slideRef.current.offsetWidth + 'px'
-        clone.style.height = slideRef.current.offsetHeight + 'px'
-        clone.style.transform = 'none' // Ensure no transforms affect the dimensions
-        hiddenContainer.appendChild(clone)
-        slideElements.push(clone)
-      }
-      
-      // Wait for all slides to render
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
-      // Capture each slide from the hidden container
-      for (let i = 0; i < slideElements.length; i++) {
-        const dataUrl = await toJpeg(slideElements[i], {
-          cacheBust: true,
-          pixelRatio: 2.0,
-          quality: 1.0,
-          width: slideRef.current.offsetWidth, // Use original dimensions
-          height: slideRef.current.offsetHeight, // Use original dimensions
-          style: {
-            width: slideRef.current.offsetWidth + 'px',
-            height: slideRef.current.offsetHeight + 'px'
-          }
-        })
-        
-        if (i > 0) {
-          pdf.addPage([1200, 675], 'landscape')
-        }
-        
-        pdf.addImage(dataUrl, 'JPEG', 0, 0, 1200, 675)
-      }
-      
-      // Cleanup
-      document.body.removeChild(hiddenContainer)
-      setCurrentSlide(originalSlide)
-      pdf.save('presentation-blind.pdf')
-      
-    } catch (error) {
-      console.error('Error generating blind PDF:', error)
-      alert('Failed to generate PDF. Please try again.')
-    } finally {
-      setIsBlindGeneratingPDF(false)
-    }
-  }
-
   const slide = slides[currentSlide]
 
   return (
@@ -194,7 +114,7 @@ export default function PythonPresentation() {
       </header>
 
       {/* Navigation */}
-      {!isGeneratingPDF && !isBlindGeneratingPDF && (
+      {!isGeneratingPDF && (
         <div className="fixed top-4 right-1/2 translate-x-1/2 z-10 flex gap-2">
           <Button
             variant="outline"
@@ -219,14 +139,6 @@ export default function PythonPresentation() {
             className="border-gray-300 text-gray-700 hover:bg-gray-100 bg-white shadow-sm"
           >
             <Download className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={generatePDFBlind}
-            className="border-gray-300 text-gray-700 hover:bg-gray-100 bg-white shadow-sm"
-          >
-            👁️‍🗨️
           </Button>
         </div>
       )}
