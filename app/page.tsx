@@ -1,17 +1,22 @@
 // Generated presentation component
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, Download } from "lucide-react"
 import slides from "@/slides.json"
 import { BlockMath } from 'react-katex'
 import 'katex/dist/katex.min.css'
 import MermaidDiagram from '@/components/MermaidDiagram'
 import Image from 'next/image'
+import { toJpeg } from 'html-to-image'
+import jsPDF from 'jspdf'
 
 export default function PythonPresentation() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
+  const [isBlindGeneratingPDF, setIsBlindGeneratingPDF] = useState(false)
+  const slideRef = useRef<HTMLDivElement>(null)
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length)
@@ -25,10 +30,147 @@ export default function PythonPresentation() {
     setCurrentSlide(index)
   }
 
+  const generatePDF = async () => {
+    if (!slideRef.current) return
+    
+    setIsGeneratingPDF(true)
+    
+    try {
+      const pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'px',
+        format: [1200, 675]
+      })
+      
+      const originalSlide = currentSlide
+      
+      // Iterate through all slides
+      for (let i = 0; i < slides.length; i++) {
+        // Set the current slide
+        setCurrentSlide(i)
+        
+        // Wait for rendering using requestAnimationFrame
+        await new Promise(resolve => requestAnimationFrame(() => {
+          requestAnimationFrame(resolve)
+        }))
+        
+        // Small wait for heavy content
+        await new Promise(resolve => setTimeout(resolve, 100))
+        
+        // Capture the slide as JPEG with maximum quality using html-to-image
+        const dataUrl = await toJpeg(slideRef.current, {
+          cacheBust: true,
+          pixelRatio: 2.0, // Maximum pixel ratio for best quality
+          quality: 1.0, // JPEG quality 100%
+          width: slideRef.current.offsetWidth,
+          height: slideRef.current.offsetHeight,
+        })
+        
+        // Add a new page if not the first slide
+        if (i > 0) {
+          pdf.addPage([1200, 675], 'landscape')
+        }
+        
+        // Add the image to the PDF
+        pdf.addImage(dataUrl, 'JPEG', 0, 0, 1200, 675)
+      }
+      
+      // Save the PDF
+      pdf.save('presentation.pdf')
+      
+      // Restore the original slide
+      setCurrentSlide(originalSlide)
+    } catch (error) {
+      console.error('Error generating PDF:', error)
+      alert('Failed to generate PDF. Please try again.')
+    } finally {
+      setIsGeneratingPDF(false)
+    }
+  }
+
+  const generatePDFBlind = async () => {
+    if (!slideRef.current) return
+    
+    setIsBlindGeneratingPDF(true)
+    
+    try {
+      const pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'px',
+        format: [1200, 675]
+      })
+      
+      const originalSlide = currentSlide
+      
+      // Create a hidden container for all slides
+      const hiddenContainer = document.createElement('div')
+      hiddenContainer.style.position = 'absolute'
+      hiddenContainer.style.left = '-9999px'
+      hiddenContainer.style.top = '0'
+      hiddenContainer.style.width = slideRef.current.offsetWidth + 'px'
+      hiddenContainer.style.height = slideRef.current.offsetHeight + 'px'
+      hiddenContainer.style.overflow = 'hidden'
+      hiddenContainer.style.backgroundColor = '#ffffff' // Match original background
+      document.body.appendChild(hiddenContainer)
+      
+      // Clone all slides into the hidden container
+      const slideElements = []
+      for (let i = 0; i < slides.length; i++) {
+        setCurrentSlide(i)
+        await new Promise(resolve => requestAnimationFrame(resolve))
+        
+        const clone = slideRef.current.cloneNode(true) as HTMLElement
+        clone.style.position = 'absolute'
+        clone.style.top = '0'
+        clone.style.left = '0'
+        clone.style.width = slideRef.current.offsetWidth + 'px'
+        clone.style.height = slideRef.current.offsetHeight + 'px'
+        clone.style.transform = 'none' // Ensure no transforms affect the dimensions
+        hiddenContainer.appendChild(clone)
+        slideElements.push(clone)
+      }
+      
+      // Wait for all slides to render
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      // Capture each slide from the hidden container
+      for (let i = 0; i < slideElements.length; i++) {
+        const dataUrl = await toJpeg(slideElements[i], {
+          cacheBust: true,
+          pixelRatio: 2.0,
+          quality: 1.0,
+          width: slideRef.current.offsetWidth, // Use original dimensions
+          height: slideRef.current.offsetHeight, // Use original dimensions
+          style: {
+            width: slideRef.current.offsetWidth + 'px',
+            height: slideRef.current.offsetHeight + 'px'
+          }
+        })
+        
+        if (i > 0) {
+          pdf.addPage([1200, 675], 'landscape')
+        }
+        
+        pdf.addImage(dataUrl, 'JPEG', 0, 0, 1200, 675)
+      }
+      
+      // Cleanup
+      document.body.removeChild(hiddenContainer)
+      setCurrentSlide(originalSlide)
+      pdf.save('presentation-blind.pdf')
+      
+    } catch (error) {
+      console.error('Error generating blind PDF:', error)
+      alert('Failed to generate PDF. Please try again.')
+    } finally {
+      setIsBlindGeneratingPDF(false)
+    }
+  }
+
   const slide = slides[currentSlide]
 
   return (
-    <div className="h-screen bg-white text-black flex flex-col overflow-hidden">
+    <div ref={slideRef} className="h-screen bg-white text-black flex flex-col overflow-hidden">
       {/* Header */}
       <header className="flex-shrink-0 px-8 pt-4 pb-2 flex justify-between items-center">
         <div className="flex items-center">
@@ -52,24 +194,42 @@ export default function PythonPresentation() {
       </header>
 
       {/* Navigation */}
-      <div className="fixed top-4 right-1/2 translate-x-1/2 z-10 flex gap-2">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={prevSlide}
-          className="border-gray-300 text-gray-700 hover:bg-gray-100 bg-white shadow-sm"
-        >
-          <ChevronLeft className="h-4 w-4" />
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={nextSlide}
-          className="border-gray-300 text-gray-700 hover:bg-gray-100 bg-white shadow-sm"
-        >
-          <ChevronRight className="h-4 w-4" />
-        </Button>
-      </div>
+      {!isGeneratingPDF && !isBlindGeneratingPDF && (
+        <div className="fixed top-4 right-1/2 translate-x-1/2 z-10 flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={prevSlide}
+            className="border-gray-300 text-gray-700 hover:bg-gray-100 bg-white shadow-sm"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={nextSlide}
+            className="border-gray-300 text-gray-700 hover:bg-gray-100 bg-white shadow-sm"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={generatePDF}
+            className="border-gray-300 text-gray-700 hover:bg-gray-100 bg-white shadow-sm"
+          >
+            <Download className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={generatePDFBlind}
+            className="border-gray-300 text-gray-700 hover:bg-gray-100 bg-white shadow-sm"
+          >
+            👁️‍🗨️
+          </Button>
+        </div>
+      )}
 
       {/* Main Content */}
       <div className="flex-1 flex overflow-auto min-h-0">
@@ -181,12 +341,10 @@ export default function PythonPresentation() {
           </div>
         </div>
         
-        {/* Right side image/placeholder box - only show for feature slides */}
-        {slide.type === "feature" && (
-          <div className="w-[320px] flex-shrink-0 flex items-end">
-            <div className="w-full h-[50%] bg-black"></div>
-          </div>
-        )}
+        {/* Right side image/placeholder box - show on all slides */}
+        <div className="w-[320px] flex-shrink-0 flex items-end">
+          <div className="w-full h-[50%] bg-black"></div>
+        </div>
       </div>
 
       {/* Footer */}
