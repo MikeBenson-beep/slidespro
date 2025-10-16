@@ -1,16 +1,23 @@
-[
-  {
-    "id": 1,
-    "title": "Titolo della Slide prova",
-    "subtitle": "",
-    "type": "feature",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing",
-    "content": [
-      "Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      "Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      "Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-    ]
-  },
+{
+  "lessons": [
+    {
+      "id": "python-intro",
+      "title": "Introduction to Python Programming",
+      "description": "Learn the basics of Python programming language",
+      "duration": "45 minutes",
+      "slides": [
+        {
+          "id": 1,
+          "title": "Titolo della Slide ",
+          "subtitle": "",
+          "type": "feature",
+          "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing",
+          "content": [
+            "Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            "Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            "Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+          ]
+        },
   {
     "id": 2,
     "title": "Why Python?",
@@ -166,18 +173,65 @@
     "type": "mermaid",
     "diagram": "classDiagram\n    Animal <|-- Dog\n    Animal <|-- Cat\n    Animal : +String name\n    Animal : +int age\n    Animal : +makeSound()\n    class Dog{\n        +String breed\n        +fetch()\n    }\n    class Cat{\n        +int lives\n        +scratch()\n    }"
   },
-  {
-    "id": 14,
-    "title": "Thank You",
-    "subtitle": "Start Your Python Journey Today",
-    "type": "closing",
-    "content": [
-      "Practice regularly",
-      "Build real projects",
-      "Join the community",
-      "Never stop learning",
-      "Share your knowledge"
-    ]
-  }
-]
+        {
+          "id": 14,
+          "title": "Thank You",
+          "subtitle": "Start Your Python Journey Today",
+          "type": "closing",
+          "content": [
+            "Practice regularly",
+            "Build real projects",
+            "Join the community",
+            "Never stop learning",
+            "Share your knowledge"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "javascript-basics",
+      "title": "JavaScript Fundamentals",
+      "description": "Master the basics of JavaScript programming",
+      "duration": "60 minutes",
+      "slides": [
+        {
+          "id": 1,
+          "title": "Welcome to JavaScript",
+          "subtitle": "The Language of the Web",
+          "type": "title",
+          "content": [
+            "JavaScript is everywhere",
+            "Frontend and backend development",
+            "Dynamic and interactive websites",
+            "Modern web applications"
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Variables and Data Types",
+          "subtitle": "Storing Information",
+          "type": "feature",
+          "content": [
+            "let, const, and var",
+            "Strings, numbers, booleans",
+            "Arrays and objects",
+            "Type coercion"
+          ]
+        },
+        {
+          "id": 3,
+          "title": "Thank You",
+          "subtitle": "Continue Your JavaScript Journey",
+          "type": "closing",
+          "content": [
+            "Practice with real projects",
+            "Learn modern frameworks",
+            "Build interactive websites",
+            "Join the developer community"
+          ]
+        }
+      ]
+    }
+  ]
+}
 
