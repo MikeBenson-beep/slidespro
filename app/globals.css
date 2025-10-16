@@ -3,6 +3,27 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: 'Keep Calm';
+  src: url('/fonts/Keep Calm-FontZillion/Fonts/keepcalm-medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mytupi';
+  src: url('/fonts/Mytupi-FontZillion/Fonts/mytupi.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mytupi';
+  src: url('/fonts/Mytupi-FontZillion/Fonts/mytupibold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -121,5 +142,9 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Mytupi', sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Keep Calm', sans-serif;
   }
 }
