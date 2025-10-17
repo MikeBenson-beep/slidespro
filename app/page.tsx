@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Clock, BookOpen } from "lucide-react"
 import { useRouter } from "next/navigation"
 import Image from 'next/image'
+import { Button } from "@/components/ui/button"
 import DownloadTracker from '@/lib/downloadTracker'
 
 interface Lesson {
@@ -77,6 +78,16 @@ export default function MainMenu() {
           <p className="text-gray-500 max-w-2xl mx-auto">
             Interactive courses designed for modern learning
           </p>
+        </div>
+
+        {/* Unified Presentation Button */}
+        <div className="mb-8 flex justify-center">
+          <Button
+            onClick={() => router.push('/unified')}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-medium rounded-lg shadow-sm"
+          >
+            View All Lessons Together
+          </Button>
         </div>
 
         {/* Lessons Grid */}
