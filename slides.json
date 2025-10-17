@@ -8,7 +8,7 @@
       "slides": [
         {
           "id": 1,
-          "title": "Titolo della Slide ",
+          "title": "Titolo della Slides",
           "subtitle": "",
           "type": "feature",
           "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing",
@@ -18,161 +18,161 @@
             "Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
           ]
         },
-  {
-    "id": 2,
-    "title": "Why Python?",
-    "subtitle": "Modern Programming Language",
-    "type": "feature",
-    "content": [
-      "Easy to learn and read",
-      "Versatile for web, data science, AI",
-      "Large community and ecosystem",
-      "Cross-platform compatibility",
-      "Excellent documentation"
-    ]
-  },
-  {
-    "id": 3,
-    "title": "Core Features",
-    "subtitle": "What Makes Python Special",
-    "type": "feature",
-    "content": [
-      "Dynamic typing for flexibility",
-      "Object-oriented programming support",
-      "Functional programming capabilities",
-      "Extensive standard library",
-      "Third-party package ecosystem"
-    ]
-  },
-  {
-    "id": 4,
-    "title": "Data Types",
-    "subtitle": "Python Built-in Types",
-    "type": "feature",
-    "content": [
-      "Integers and floating-point numbers",
-      "Strings for text manipulation",
-      "Lists for ordered collections",
-      "Dictionaries for key-value pairs",
-      "Sets for unique elements",
-      "Tuples for immutable sequences"
-    ]
-  },
-  {
-    "id": 5,
-    "title": "Control Flow",
-    "subtitle": "Making Decisions in Code",
-    "type": "feature",
-    "content": [
-      "if/elif/else statements",
-      "for loops for iteration",
-      "while loops for conditions",
-      "break and continue keywords",
-      "List comprehensions",
-      "Generator expressions"
-    ]
-  },
-  {
-    "id": 6,
-    "title": "List Comprehension Example",
-    "subtitle": "Elegant and Pythonic",
-    "type": "code",
-    "code": "# Traditional approach\nsquares = []\nfor i in range(10):\n    squares.append(i ** 2)\n\n# List comprehension\nsquares = [i ** 2 for i in range(10)]\n\n# With condition\neven_squares = [i ** 2 for i in range(10) if i % 2 == 0]\n\n# Nested comprehension\nmatrix = [[i * j for j in range(5)] for i in range(5)]",
-    "language": "python"
-  },
-  {
-    "id": 7,
-    "title": "Mathematical Foundations",
-    "subtitle": "Time Complexity Analysis",
-    "type": "math",
-    "content": "The time complexity of common algorithms:",
-    "math": [
-      {
-        "label": "Linear search",
-        "formula": "O(n) = n"
-      },
-      {
-        "label": "Binary search",
-        "formula": "O(\\log n) = \\log_2 n"
-      },
-      {
-        "label": "Quadratic algorithms",
-        "formula": "O(n^2) = n^2"
-      },
-      {
-        "label": "General polynomial",
-        "formula": "T(n) = \\sum_{i=0}^{k} a_i n^i"
-      }
-    ]
-  },
-  {
-    "id": 8,
-    "title": "Functions",
-    "subtitle": "Reusable Code Blocks",
-    "type": "feature",
-    "content": [
-      "Function definition with def",
-      "Parameters and arguments",
-      "Return values",
-      "Default parameters",
-      "*args and **kwargs",
-      "Lambda functions"
-    ]
-  },
-  {
-    "id": 9,
-    "title": "Function Example",
-    "subtitle": "Decorators and Closures",
-    "type": "code",
-    "code": "def timer_decorator(func):\n    def wrapper(*args, **kwargs):\n        import time\n        start = time.time()\n        result = func(*args, **kwargs)\n        end = time.time()\n        print(f\"{func.__name__} took {end - start:.4f}s\")\n        return result\n    return wrapper\n\n@timer_decorator\ndef fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)",
-    "language": "python"
-  },
-  {
-    "id": 10,
-    "title": "Statistics & Probability",
-    "subtitle": "Essential Formulas",
-    "type": "math",
-    "content": "Key statistical measures used in data science:",
-    "math": [
-      {
-        "label": "Mean",
-        "formula": "\\mu = \\frac{1}{n} \\sum_{i=1}^{n} x_i"
-      },
-      {
-        "label": "Variance",
-        "formula": "\\sigma^2 = \\frac{1}{n} \\sum_{i=1}^{n} (x_i - \\mu)^2"
-      },
-      {
-        "label": "Standard Deviation",
-        "formula": "\\sigma = \\sqrt{\\sigma^2}"
-      },
-      {
-        "label": "Normal Distribution",
-        "formula": "f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2}"
-      }
-    ]
-  },
-  {
-    "id": 11,
-    "title": "Python Program Flow",
-    "subtitle": "Basic Execution Model",
-    "type": "mermaid",
-    "diagram": "flowchart TD\n    A[Start Program] --> B[Import Modules]\n    B --> C[Define Functions]\n    C --> D[Define Classes]\n    D --> E{Main Block?}\n    E -->|Yes| F[Execute Main Code]\n    E -->|No| G[Module Imported]\n    F --> H[End Program]\n    G --> H"
-  },
-  {
-    "id": 12,
-    "title": "Data Processing Pipeline",
-    "subtitle": "ETL Workflow",
-    "type": "mermaid",
-    "diagram": "graph LR\n    A[Raw Data] --> B[Extract]\n    B --> C[Transform]\n    C --> D[Validate]\n    D --> E[Load]\n    E --> F[Database]\n    D -->|Error| G[Error Handler]\n    G --> H[Logging]\n    style A fill:#f9f9f9\n    style F fill:#f9f9f9\n    style G fill:#ffcccc"
-  },
-  {
-    "id": 13,
-    "title": "Object-Oriented Hierarchy",
-    "subtitle": "Class Inheritance Structure",
-    "type": "mermaid",
-    "diagram": "classDiagram\n    Animal <|-- Dog\n    Animal <|-- Cat\n    Animal : +String name\n    Animal : +int age\n    Animal : +makeSound()\n    class Dog{\n        +String breed\n        +fetch()\n    }\n    class Cat{\n        +int lives\n        +scratch()\n    }"
-  },
+        {
+          "id": 2,
+          "title": "Why Python?",
+          "subtitle": "Modern Programming Language",
+          "type": "feature",
+          "content": [
+            "Easy to learn and read",
+            "Versatile for web, data science, AI",
+            "Large community and ecosystem",
+            "Cross-platform compatibility",
+            "Excellent documentation"
+          ]
+        },
+        {
+          "id": 3,
+          "title": "Core Features",
+          "subtitle": "What Makes Python Special",
+          "type": "feature",
+          "content": [
+            "Dynamic typing for flexibility",
+            "Object-oriented programming support",
+            "Functional programming capabilities",
+            "Extensive standard library",
+            "Third-party package ecosystem"
+          ]
+        },
+        {
+          "id": 4,
+          "title": "Data Types",
+          "subtitle": "Python Built-in Types",
+          "type": "feature",
+          "content": [
+            "Integers and floating-point numbers",
+            "Strings for text manipulation",
+            "Lists for ordered collections",
+            "Dictionaries for key-value pairs",
+            "Sets for unique elements",
+            "Tuples for immutable sequences"
+          ]
+        },
+        {
+          "id": 5,
+          "title": "Control Flow",
+          "subtitle": "Making Decisions in Code",
+          "type": "feature",
+          "content": [
+            "if/elif/else statements",
+            "for loops for iteration",
+            "while loops for conditions",
+            "break and continue keywords",
+            "List comprehensions",
+            "Generator expressions"
+          ]
+        },
+        {
+          "id": 6,
+          "title": "List Comprehension Example",
+          "subtitle": "Elegant and Pythonic",
+          "type": "code",
+          "code": "# Traditional approach\nsquares = []\nfor i in range(10):\n    squares.append(i ** 2)\n\n# List comprehension\nsquares = [i ** 2 for i in range(10)]\n\n# With condition\neven_squares = [i ** 2 for i in range(10) if i % 2 == 0]\n\n# Nested comprehension\nmatrix = [[i * j for j in range(5)] for i in range(5)]",
+          "language": "python"
+        },
+        {
+          "id": 7,
+          "title": "Mathematical Foundations",
+          "subtitle": "Time Complexity Analysis",
+          "type": "math",
+          "content": "The time complexity of common algorithms:",
+          "math": [
+            {
+              "label": "Linear search",
+              "formula": "O(n) = n"
+            },
+            {
+              "label": "Binary search",
+              "formula": "O(\\log n) = \\log_2 n"
+            },
+            {
+              "label": "Quadratic algorithms",
+              "formula": "O(n^2) = n^2"
+            },
+            {
+              "label": "General polynomial",
+              "formula": "T(n) = \\sum_{i=0}^{k} a_i n^i"
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "title": "Functions",
+          "subtitle": "Reusable Code Blocks",
+          "type": "feature",
+          "content": [
+            "Function definition with def",
+            "Parameters and arguments",
+            "Return values",
+            "Default parameters",
+            "*args and **kwargs",
+            "Lambda functions"
+          ]
+        },
+        {
+          "id": 9,
+          "title": "Function Example",
+          "subtitle": "Decorators and Closures",
+          "type": "code",
+          "code": "def timer_decorator(func):\n    def wrapper(*args, **kwargs):\n        import time\n        start = time.time()\n        result = func(*args, **kwargs)\n        end = time.time()\n        print(f\"{func.__name__} took {end - start:.4f}s\")\n        return result\n    return wrapper\n\n@timer_decorator\ndef fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)",
+          "language": "python"
+        },
+        {
+          "id": 10,
+          "title": "Statistics & Probability",
+          "subtitle": "Essential Formulas",
+          "type": "math",
+          "content": "Key statistical measures used in data science:",
+          "math": [
+            {
+              "label": "Mean",
+              "formula": "\\mu = \\frac{1}{n} \\sum_{i=1}^{n} x_i"
+            },
+            {
+              "label": "Variance",
+              "formula": "\\sigma^2 = \\frac{1}{n} \\sum_{i=1}^{n} (x_i - \\mu)^2"
+            },
+            {
+              "label": "Standard Deviation",
+              "formula": "\\sigma = \\sqrt{\\sigma^2}"
+            },
+            {
+              "label": "Normal Distribution",
+              "formula": "f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2}"
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "title": "Python Program Flow",
+          "subtitle": "Basic Execution Model",
+          "type": "mermaid",
+          "diagram": "flowchart TD\n    A[Start Program] --> B[Import Modules]\n    B --> C[Define Functions]\n    C --> D[Define Classes]\n    D --> E{Main Block?}\n    E -->|Yes| F[Execute Main Code]\n    E -->|No| G[Module Imported]\n    F --> H[End Program]\n    G --> H"
+        },
+        {
+          "id": 12,
+          "title": "Data Processing Pipeline",
+          "subtitle": "ETL Workflow",
+          "type": "mermaid",
+          "diagram": "graph LR\n    A[Raw Data] --> B[Extract]\n    B --> C[Transform]\n    C --> D[Validate]\n    D --> E[Load]\n    E --> F[Database]\n    D -->|Error| G[Error Handler]\n    G --> H[Logging]\n    style A fill:#f9f9f9\n    style F fill:#f9f9f9\n    style G fill:#ffcccc"
+        },
+        {
+          "id": 13,
+          "title": "Object-Oriented Hierarchy",
+          "subtitle": "Class Inheritance Structure",
+          "type": "mermaid",
+          "diagram": "classDiagram\n    Animal <|-- Dog\n    Animal <|-- Cat\n    Animal : +String name\n    Animal : +int age\n    Animal : +makeSound()\n    class Dog{\n        +String breed\n        +fetch()\n    }\n    class Cat{\n        +int lives\n        +scratch()\n    }"
+        },
         {
           "id": 14,
           "title": "Thank You",
@@ -234,4 +234,3 @@
     }
   ]
 }
-
