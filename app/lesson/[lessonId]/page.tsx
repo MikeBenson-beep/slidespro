@@ -118,10 +118,44 @@ export default function LessonPresentation({ params }: { params: { lessonId: str
       
       // Generate filename and save the PDF
       const fileName = `${lesson.title.replace(/\s+/g, '-').toLowerCase()}.pdf`
+      
+      // Get PDF as base64 data
+      const pdfData = pdf.output('datauristring')
+      
+      // Save to user's downloads (existing functionality)
       pdf.save(fileName)
       
-      // Track the download
-      DownloadTracker.addDownload(lesson.id, lesson.title, fileName)
+      // Also save to server's downloads directory
+      try {
+        const response = await fetch('/api/save-download', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            pdfData,
+            fileName,
+            lessonId: lesson.id,
+            lessonTitle: lesson.title
+          })
+        })
+        
+        const result = await response.json()
+        
+        if (result.success) {
+          console.log('File saved to server:', result.filePath)
+          // Track the download with file size
+          DownloadTracker.addDownload(lesson.id, lesson.title, fileName, result.fileSize)
+        } else {
+          console.error('Failed to save to server:', result.error)
+          // Still track the download even if server save fails
+          DownloadTracker.addDownload(lesson.id, lesson.title, fileName)
+        }
+      } catch (serverError) {
+        console.error('Error saving to server:', serverError)
+        // Still track the download even if server save fails
+        DownloadTracker.addDownload(lesson.id, lesson.title, fileName)
+      }
       
       // Update download status
       setIsDownloaded(true)
